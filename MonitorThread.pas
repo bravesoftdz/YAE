@@ -1,5 +1,7 @@
 unit MonitorThread;
 
+{$MODE Delphi}
+
 interface
 
 uses
@@ -14,10 +16,11 @@ type
   public
     Path: string;
     WatchSubTree: boolean;
-    NotifyFilter: Integer;
+    NotifyFilter: integer;
     hWnd: HWND;
     msg2Send: UINT;
-    constructor Create(ahwnd: HWND; amsg2Send: UINT; const aPath: string; aWST: Boolean; aNF: Integer);
+    constructor Create(ahwnd: HWND; amsg2Send: UINT; const aPath: string;
+      aWST: boolean; aNF: integer);
   end;
 
 
@@ -38,7 +41,8 @@ implementation
 
 { TMonitorThread }
 
-constructor TMonitorThread.Create(ahwnd: HWND; amsg2Send: UINT; const aPath: string; aWST: Boolean; aNF: Integer);
+constructor TMonitorThread.Create(ahwnd: HWND; amsg2Send: UINT;
+  const aPath: string; aWST: boolean; aNF: integer);
 begin
   inherited Create(True);
   FreeOnTerminate := False;
@@ -54,15 +58,15 @@ procedure TMonitorThread.Execute;
 var
   h: THandle;
 begin
-  h := FindFirstChangeNotification(Pchar(Path), WatchSubTree, NotifyFilter);
+  h := FindFirstChangeNotification(PChar(Path), WatchSubTree, NotifyFilter);
   if (h <> INVALID_HANDLE_VALUE) then
     repeat
       if WaitForSingleObject(h, 200) = WAIT_OBJECT_0 then
-        begin
-          PostMessage(hWnd, msg2Send, 0, 0);
-          if not FindNextChangeNotification(h) then
-            Break;
-        end;
+      begin
+        PostMessage(hWnd, msg2Send, 0, 0);
+        if not FindNextChangeNotification(h) then
+          Break;
+      end;
     until Terminated;
 end;
 

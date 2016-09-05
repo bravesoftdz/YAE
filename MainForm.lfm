@@ -11,11 +11,9 @@ object Form1: TForm1
   Font.Name = 'MS Sans Serif'
   Font.Style = []
   Menu = MainMenu1
-  OldCreateOrder = False
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   PixelsPerInch = 96
-  TextHeight = 13
   object Splitter1: TSplitter
     Left = 185
     Top = 83
@@ -57,8 +55,8 @@ object Form1: TForm1
       BevelOuter = bvNone
       TabOrder = 0
       object Label2: TLabel
-        Left = 25
-        Top = 9
+        Left = 23
+        Top = 7
         Width = 417
         Height = 13
         Caption = 
@@ -73,8 +71,8 @@ object Form1: TForm1
         Transparent = True
       end
       object Label1: TLabel
-        Left = 24
-        Top = 8
+        Left = 22
+        Top = 6
         Width = 417
         Height = 13
         Caption = 
@@ -107,7 +105,7 @@ object Form1: TForm1
       TabOrder = 2
       OnResize = Panel4Resize
       object SpeedButton1: TSpeedButton
-        Left = 248
+        Left = 246
         Top = 0
         Width = 23
         Height = 22
@@ -146,8 +144,8 @@ object Form1: TForm1
     Align = alLeft
     TabOrder = 1
     object TreeView1: TTreeView
-      Left = 1
-      Top = 1
+      Left = 0
+      Top = 0
       Width = 183
       Height = 435
       Align = alClient
@@ -167,16 +165,16 @@ object Form1: TForm1
     Align = alClient
     TabOrder = 2
     object Splitter2: TSplitter
-      Left = 1
-      Top = 314
+      Left = 0
+      Top = 312
       Width = 654
       Height = 3
       Cursor = crVSplit
       Align = alBottom
     end
     object panError: TPanel
-      Left = 1
-      Top = 1
+      Left = 0
+      Top = 0
       Width = 654
       Height = 313
       Align = alClient
@@ -185,8 +183,8 @@ object Form1: TForm1
       Visible = False
     end
     object ListView1: TListView
-      Left = 1
-      Top = 1
+      Left = 0
+      Top = 0
       Width = 654
       Height = 313
       Align = alClient
@@ -223,16 +221,16 @@ object Form1: TForm1
       OnDeletion = ListView1Deletion
     end
     object panCustom: TPanel
-      Left = 1
-      Top = 317
+      Left = 0
+      Top = 315
       Width = 654
       Height = 119
       Align = alBottom
       Caption = 'panCustom'
       TabOrder = 2
       object ListBox1: TListBox
-        Left = 1
-        Top = 1
+        Left = 0
+        Top = 0
         Width = 121
         Height = 117
         Align = alLeft
@@ -252,124 +250,12 @@ object Form1: TForm1
         OnClick = ListBox1Click
       end
       object Notebook1: TNotebook
-        Left = 122
-        Top = 1
+        Left = 120
+        Top = 0
         Width = 531
         Height = 117
         Align = alClient
         TabOrder = 1
-        object TPage
-          Left = 0
-          Top = 0
-          Caption = 'Notes'
-          object SpeedButton2: TSpeedButton
-            Left = 8
-            Top = 8
-            Width = 23
-            Height = 22
-            AllowAllUp = True
-            GroupIndex = 1
-            Glyph.Data = {
-              F6000000424DF600000000000000760000002800000010000000100000000100
-              0400000000008000000000000000000000001000000000000000000000000000
-              8000008000000080800080000000800080008080000080808000C0C0C0000000
-              FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00888888888888
-              8888888888888888888888888888888888888888888888888888888000000008
-              8888888800088000888888880008800088888888000880008888888800000008
-              8888888800088000888888880008800088888888000880008888888000000008
-              8888888888888888888888888888888888888888888888888888}
-            OnClick = SpeedButton2Click
-          end
-          object SpeedButton3: TSpeedButton
-            Left = 32
-            Top = 8
-            Width = 23
-            Height = 22
-            AllowAllUp = True
-            GroupIndex = 2
-            Glyph.Data = {
-              F6000000424DF600000000000000760000002800000010000000100000000100
-              0400000000008000000000000000000000001000000000000000000000000000
-              8000008000000080800080000000800080008080000080808000C0C0C0000000
-              FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00888888888888
-              8888888888888888888888888888888888888888888888888888888000000888
-              8888888880078888888888888700888888888888880078888888888888700888
-              8888888888800788888888888887008888888888888800788888888888800000
-              8888888888888888888888888888888888888888888888888888}
-          end
-          object SpeedButton4: TSpeedButton
-            Left = 56
-            Top = 8
-            Width = 23
-            Height = 22
-            AllowAllUp = True
-            GroupIndex = 3
-            Glyph.Data = {
-              F6000000424DF600000000000000760000002800000010000000100000000100
-              0400000000008000000000000000000000001000000000000000000000000000
-              8000008000000080800080000000800080008080000080808000C0C0C0000000
-              FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00888888888888
-              8888888888888888888888800000000088888888888888888888888880000088
-              8888888800787008888888880088800888888888008880088888888800888008
-              8888888800888008888888880088800888888888008880088888888000080000
-              8888888888888888888888888888888888888888888888888888}
-          end
-          object SpeedButton5: TSpeedButton
-            Left = 496
-            Top = 8
-            Width = 23
-            Height = 22
-            Glyph.Data = {
-              F6000000424DF600000000000000760000002800000010000000100000000100
-              0400000000008000000000000000000000001000000000000000000000000000
-              8000008000000080800080000000800080008080000080808000C0C0C0000000
-              FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00888888888888
-              8888880000000000000880330000008803088033000000880308803300000088
-              0308803300000000030880333333333333088033000000003308803088888888
-              0308803088888888030880308888888803088030888888880308803088888888
-              0008803088888888080880000000000000088888888888888888}
-          end
-          object RichEdit1: TRichEdit
-            Left = 8
-            Top = 32
-            Width = 513
-            Height = 81
-            Anchors = [akLeft, akTop, akRight, akBottom]
-            Lines.Strings = (
-              'RichEdit1')
-            TabOrder = 0
-          end
-          object ComboBox1: TComboBox
-            Left = 80
-            Top = 8
-            Width = 145
-            Height = 21
-            ItemHeight = 13
-            TabOrder = 1
-            OnChange = ComboBox1Change
-          end
-        end
-        object TPage
-          Left = 0
-          Top = 0
-          Caption = 'Version Information'
-          object StringGrid1: TStringGrid
-            Left = 0
-            Top = 0
-            Width = 531
-            Height = 117
-            Align = alClient
-            ColCount = 2
-            DefaultColWidth = 200
-            DefaultRowHeight = 14
-            TabOrder = 0
-          end
-        end
-        object TPage
-          Left = 0
-          Top = 0
-          Caption = 'Events'
-        end
       end
     end
   end

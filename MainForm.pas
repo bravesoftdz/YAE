@@ -1,5 +1,7 @@
 unit MainForm;
 
+{$MODE Delphi}
+
 interface
 
 uses
@@ -28,7 +30,7 @@ type
     Splitter2: TSplitter;
     ListBox1: TListBox;
     Notebook1: TNotebook;
-    RichEdit1: TRichEdit;
+    RichEdit1: TMemo;
     SpeedButton2: TSpeedButton;
     SpeedButton3: TSpeedButton;
     SpeedButton4: TSpeedButton;
@@ -43,15 +45,15 @@ type
     ComboBox1: TComboBox;
     procedure SpeedButton1Click(Sender: TObject);
     procedure ListView1ContextPopup(Sender: TObject; MousePos: TPoint;
-      var Handled: Boolean);
+      var Handled: boolean);
     procedure FormCreate(Sender: TObject);
-    procedure txtAddressKeyPress(Sender: TObject; var Key: Char);
+    procedure txtAddressKeyPress(Sender: TObject; var Key: char);
     procedure ListView1Change(Sender: TObject; Item: TListItem;
       Change: TItemChange);
     procedure ListBox1Click(Sender: TObject);
     procedure ListView1Deletion(Sender: TObject; Item: TListItem);
     procedure ListView1Compare(Sender: TObject; Item1, Item2: TListItem;
-      Data: Integer; var Compare: Integer);
+      Data: integer; var Compare: integer);
     procedure ListView1ColumnClick(Sender: TObject; Column: TListColumn);
     procedure ListView1DblClick(Sender: TObject);
     procedure TreeView1Deletion(Sender: TObject; Node: TTreeNode);
@@ -60,12 +62,12 @@ type
     procedure Panel4Resize(Sender: TObject);
     procedure NewWindow1Click(Sender: TObject);
     procedure TreeView1Expanding(Sender: TObject; Node: TTreeNode;
-      var AllowExpansion: Boolean);
+      var AllowExpansion: boolean);
     procedure SpeedButton2Click(Sender: TObject);
     procedure ComboBox1Change(Sender: TObject);
   private
     FPath: string;
-    FSortKey, FSortOrder: Integer;
+    FSortKey, FSortOrder: integer;
     FListMonitor: TMonitorThread;
     procedure BuildListView;
     procedure BuildTreeRoot;
@@ -84,16 +86,16 @@ implementation
 
 uses prop1, engine;
 
-{$R *.DFM}
+{$R *.lfm}
 
-function AttrToStr(attr: Integer): string;
+function AttrToStr(attr: integer): string;
 const
   fa: array [1..6] of char = ('R', 'H', 'S', 'V', 'D', 'A');
-  ma: array [1..6] of Integer = (1, 2, 4, 8, 16, 32);
+  ma: array [1..6] of integer = (1, 2, 4, 8, 16, 32);
 var
   i: integer;
 begin
-  result := '';
+  Result := '';
   for i := 1 to 6 do
     if (attr and ma[i]) <> 0 then
       Result := Result + fa[i]
@@ -107,35 +109,41 @@ procedure TForm1.BuildListView;
 var
   sr: TSearchRec;
 begin
-  if Assigned(FListMonitor) then begin
+  if Assigned(FListMonitor) then
+  begin
     FListMonitor.Terminate;
     FListMonitor.WaitFor;
   end;
 
   ListView1.Items.Clear;
-  if FindFirst(IncludeTrailingBackSlash(FPath) + '*.*', faAnyFile, sr) = 0 then begin
+  if FindFirst(IncludeTrailingBackSlash(FPath) + '*.*', faAnyFile, sr) = 0 then
+  begin
     repeat
       if (sr.Name <> '.') and (sr.Name <> '..') then
-      with ListView1.Items.Add do begin
-        Caption := sr.Name;
-        Data := TMyListItemData.Create(sr.Name, FPath, sr.Size, sr.Attr, FileDateToDateTime(sr.Time));
-        SubItems.Add( TMyListItemData(Data).Extention );
-        if sr.Attr and faDirectory = 0 then
-          SubItems.Add( FormatBytes(sr.Size) )
-        else
-          SubItems.Add( '' );
-        SubItems.Add( DateTimeToStr(FileDateToDateTime(sr.Time)) );
-        SubItems.Add( AttrToStr(sr.Attr) );
+        with ListView1.Items.Add do
+        begin
+          Caption := sr.Name;
+          Data := TMyListItemData.Create(sr.Name, FPath, sr.Size, sr.Attr,
+            FileDateToDateTime(sr.Time));
+          SubItems.Add(TMyListItemData(Data).Extention);
+          if sr.Attr and faDirectory = 0 then
+            SubItems.Add(FormatBytes(sr.Size))
+          else
+            SubItems.Add('');
+          SubItems.Add(DateTimeToStr(FileDateToDateTime(sr.Time)));
+          SubItems.Add(AttrToStr(sr.Attr));
 
-        ImageIndex := -1;
-      end;
+          ImageIndex := -1;
+        end;
     until FindNext(sr) <> 0;
     FindClose(sr);
     ListView1.AlphaSort;
   end;
 
-  FListMonitor := TMonitorThread.Create(Handle, WM_USER + 1, IncludeTrailingBackslash(FPath), False,
-FILE_NOTIFY_CHANGE_FILE_NAME or FILE_NOTIFY_CHANGE_DIR_NAME or FILE_NOTIFY_CHANGE_ATTRIBUTES or FILE_NOTIFY_CHANGE_SIZE or FILE_NOTIFY_CHANGE_LAST_WRITE);
+  FListMonitor := TMonitorThread.Create(Handle, WM_USER + 1,
+    IncludeTrailingBackslash(FPath), False, FILE_NOTIFY_CHANGE_FILE_NAME or
+    FILE_NOTIFY_CHANGE_DIR_NAME or FILE_NOTIFY_CHANGE_ATTRIBUTES or
+    FILE_NOTIFY_CHANGE_SIZE or FILE_NOTIFY_CHANGE_LAST_WRITE);
 end;
 
 procedure TForm1.SpeedButton1Click(Sender: TObject);
@@ -146,32 +154,34 @@ begin
     BuildListView;
     ListView1.Visible := True;
     panError.Visible := False;
-  except on E: Exception do begin
-    panError.Caption := E.Message;
-    panError.Visible := True;
-    ListView1.Visible := False;
-  end;
+  except
+    on E: Exception do
+    begin
+      panError.Caption := E.Message;
+      panError.Visible := True;
+      ListView1.Visible := False;
+    end;
   end;
 end;
 
 procedure TForm1.ListView1ContextPopup(Sender: TObject; MousePos: TPoint;
-  var Handled: Boolean);
+  var Handled: boolean);
 var
   pt: TPoint;
 begin
   Handled := True;
   pt := ListView1.ClientToScreen(MousePos);
   if ListView1.SelCount = 0 then
-    begin
+  begin
 
-    end
+  end
   else if ListView1.SelCount = 1 then
-    begin
-      Form2.SetForOne(ListView1.Selected.Data);
-      Form2.Left := pt.X;
-      Form2.Top := pt.Y;
-      Form2.Visible := True;
-    end;
+  begin
+    Form2.SetForOne(ListView1.Selected.Data);
+    Form2.Left := pt.X;
+    Form2.Top := pt.Y;
+    Form2.Visible := True;
+  end;
 end;
 
 procedure TForm1.FormCreate(Sender: TObject);
@@ -183,20 +193,18 @@ begin
   FSortKey := -1;
 
   BuildTreeRoot;
-
-  ComboBox1.Items.AddStrings(Screen.Fonts);
 end;
 
-procedure TForm1.txtAddressKeyPress(Sender: TObject; var Key: Char);
+procedure TForm1.txtAddressKeyPress(Sender: TObject; var Key: char);
 begin
-  if Key = #13 then begin
+  if Key = #13 then
+  begin
     SpeedButton1Click(Sender);
     Key := #0;
   end;
 end;
 
-procedure TForm1.ListView1Change(Sender: TObject; Item: TListItem;
-  Change: TItemChange);
+procedure TForm1.ListView1Change(Sender: TObject; Item: TListItem; Change: TItemChange);
 begin
   if ListView1.SelCount = 1 then
 
@@ -206,7 +214,7 @@ end;
 
 procedure TForm1.ListBox1Click(Sender: TObject);
 begin
-  NoteBook1.PageIndex := ListBox1.ItemIndex
+  NoteBook1.PageIndex := ListBox1.ItemIndex;
 end;
 
 procedure TForm1.ListView1Deletion(Sender: TObject; Item: TListItem);
@@ -217,28 +225,31 @@ end;
 
 
 procedure TForm1.ListView1Compare(Sender: TObject; Item1, Item2: TListItem;
-  Data: Integer; var Compare: Integer);
+  Data: integer; var Compare: integer);
 begin
   case FSortKey of
     0: Compare := lstrcmp(PChar(Item1.Caption), PChar(Item2.Caption)) * FSortOrder;
-    1: Compare := lstrcmp(PChar(TMyListItemData(Item1.Data).Extention), PChar(TMyListItemData(Item2.Data).Extention)) * FSortOrder;
-    2: Compare := CompareInt(TMyListItemData(Item1.Data).Size, TMyListItemData(Item2.Data).Size) * FSortOrder;
-    3: Compare := CompareDateTime(TMyListItemData(Item1.Data).Time, TMyListItemData(Item2.Data).Time) * FSortOrder;
+    1: Compare := lstrcmp(PChar(TMyListItemData(Item1.Data).Extention),
+        PChar(TMyListItemData(Item2.Data).Extention)) * FSortOrder;
+    2: Compare := CompareInt(TMyListItemData(Item1.Data).Size,
+        TMyListItemData(Item2.Data).Size) * FSortOrder;
+    3: Compare := CompareDateTime(TMyListItemData(Item1.Data).Time,
+        TMyListItemData(Item2.Data).Time) * FSortOrder;
     4: Compare := CompareText(Item1.SubItems[3], Item2.SubItems[3]) * FSortOrder;
     else
       Compare := 0;
   end;
 end;
 
-procedure TForm1.ListView1ColumnClick(Sender: TObject;
-  Column: TListColumn);
+procedure TForm1.ListView1ColumnClick(Sender: TObject; Column: TListColumn);
 begin
   if FSortKey = Column.Index then
   begin
     FSortOrder := -FSortOrder;
     Column.ImageIndex := (Column.ImageIndex + 1) mod 2;
   end
-  else begin
+  else
+  begin
     if FSortKey >= 0 then
       ListView1.Columns[FSortKey].ImageIndex := -1;
     FSortKey := Column.Index;
@@ -254,33 +265,36 @@ procedure TForm1.ListView1DblClick(Sender: TObject);
 var
   i: TMyListItemData;
 begin
-  if Assigned(ListView1.Selected) and Assigned(ListView1.Selected.Data) Then Begin
+  if Assigned(ListView1.Selected) and Assigned(ListView1.Selected.Data) then
+  begin
     i := TMyListItemData(ListView1.Selected.Data);
     if i.Attr and faDirectory <> 0 then
-      begin
-        txtAddress.Text := i.Path;
-        SpeedButton1Click(Sender);
-      end
+    begin
+      txtAddress.Text := i.Path;
+      SpeedButton1Click(Sender);
+    end
     else
-      begin
-        ShellExecute(Handle, nil, PChar(i.Path), nil, nil, SW_SHOWNORMAL);
-      end
-  End;
+    begin
+      ShellExecute(Handle, nil, PChar(i.Path), nil, nil, SW_SHOWNORMAL);
+    end;
+  end;
 end;
 
 procedure TForm1.BuildTreeRoot;
 var
   d: DWORD;
-  ch: Char;
+  ch: char;
   ppidl: PItemIDList;
-  buf: array [0..MAX_PATH] of Char;
+  buf: array [0..MAX_PATH] of char;
 begin
   TreeView1.Items.Clear;
   d := GetLogicalDrives;
   ch := 'A';
-  while d <> 0 do begin
+  while d <> 0 do
+  begin
     if (d and 1) <> 0 then
-      with TreeView1.Items.Add(nil, ch + ':\') do begin
+      with TreeView1.Items.Add(nil, ch + ':\') do
+      begin
         HasChildren := True;
         Data := TMyDriveData.Create(ch);
       end;
@@ -288,14 +302,16 @@ begin
     Inc(ch);
   end;
 
-  with TreeView1.Items.Add(nil, 'Desktop') do begin
+  with TreeView1.Items.Add(nil, 'Desktop') do
+  begin
     HasChildren := True;
     SHGetSpecialFolderLocation(Handle, CSIDL_DESKTOPDIRECTORY, ppidl);
     SHGetPathFromIDList(ppidl, buf);
     Data := TMyListItemData.Create(buf);
   end;
 
-  with TreeView1.Items.Add(nil, 'My Documents') do begin
+  with TreeView1.Items.Add(nil, 'My Documents') do
+  begin
     HasChildren := True;
     SHGetSpecialFolderLocation(Handle, CSIDL_PERSONAL, ppidl);
     SHGetPathFromIDList(ppidl, buf);
@@ -308,7 +324,8 @@ procedure TForm1.TreeView1Deletion(Sender: TObject; Node: TTreeNode);
 var
   t: Pointer;
 begin
-  if Assigned(Node.Data) then begin
+  if Assigned(Node.Data) then
+  begin
     t := Node.Data;
     FreeAndNil(t);
   end;
@@ -319,20 +336,25 @@ var
   dir: TMyListItemData;
   drive: TMyDriveData;
 begin
-  if Assigned(Node) then begin
-    if Assigned(Node.Data) then begin
-      if TObject(Node.Data) is TMyListItemData then begin
+  if Assigned(Node) then
+  begin
+    if Assigned(Node.Data) then
+    begin
+      if TObject(Node.Data) is TMyListItemData then
+      begin
         dir := TMyListItemData(Node.Data);
         txtAddress.Text := dir.Path;
         SpeedButton1Click(Sender);
       end
-      else if TObject(Node.Data) is TMyDriveData then begin
+      else if TObject(Node.Data) is TMyDriveData then
+      begin
         drive := TMyDriveData(Node.Data);
         txtAddress.Text := drive.Drive;
         SpeedButton1Click(Sender);
       end;
     end
-    else begin
+    else
+    begin
       txtAddress.Text := GetNodePath(Node);
       SpeedButton1Click(Sender);
     end;
@@ -341,7 +363,8 @@ end;
 
 procedure TForm1.FormDestroy(Sender: TObject);
 begin
-  if Assigned(FListMonitor) then begin
+  if Assigned(FListMonitor) then
+  begin
     FListMonitor.Terminate;
     FListMonitor.WaitFor;
   end;
@@ -382,12 +405,13 @@ var
   s: string;
 begin
   s := IncludeTrailingBackslash(GetNodePath(Parent));
-  if FindFirst(s + '*.*', faAnyFile, sr) = 0 then begin
+  if FindFirst(s + '*.*', faAnyFile, sr) = 0 then
+  begin
     repeat
       if (sr.Name <> '.') and (sr.Name <> '..') and (sr.Attr and faDirectory <> 0) then
         with TreeView1.Items.AddChild(Parent, sr.Name) do
           HasChildren := HasSubFolders(s + sr.Name);
-    until FindNext(sr)<>0;
+    until FindNext(sr) <> 0;
     FindClose(sr);
   end;
   Parent.HasChildren := Parent.GetFirstChild <> nil;
@@ -395,23 +419,18 @@ begin
 end;
 
 procedure TForm1.TreeView1Expanding(Sender: TObject; Node: TTreeNode;
-  var AllowExpansion: Boolean);
+  var AllowExpansion: boolean);
 begin
-  if Node.HasChildren and (Node.GetFirstChild=nil) then
-    BuildOneTreeLevel(Node); 
+  if Node.HasChildren and (Node.GetFirstChild = nil) then
+    BuildOneTreeLevel(Node);
 end;
 
 procedure TForm1.SpeedButton2Click(Sender: TObject);
 begin
-  if SpeedButton2.Down then
-    RichEdit1.SelAttributes.Style := RichEdit1.SelAttributes.Style + [fsBold]
-  else
-    RichEdit1.SelAttributes.Style := RichEdit1.SelAttributes.Style - [fsBold];
 end;
 
 procedure TForm1.ComboBox1Change(Sender: TObject);
 begin
-  RichEdit1.SelAttributes.Name := ComboBox1.Text;
 end;
 
 end.

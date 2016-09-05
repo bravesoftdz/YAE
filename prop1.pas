@@ -1,5 +1,7 @@
 unit prop1;
 
+{$MODE Delphi}
+
 interface
 
 uses
@@ -22,9 +24,8 @@ type
     procedure FormDeactivate(Sender: TObject);
     procedure SpeedButton1Click(Sender: TObject);
     procedure SpeedButton2Click(Sender: TObject);
-    procedure FormKeyPress(Sender: TObject; var Key: Char);
-    procedure ListBox1MouseMove(Sender: TObject; Shift: TShiftState; X,
-      Y: Integer);
+    procedure FormKeyPress(Sender: TObject; var Key: char);
+    procedure ListBox1MouseMove(Sender: TObject; Shift: TShiftState; X, Y: integer);
     procedure ListBox1Click(Sender: TObject);
     procedure SpeedButton3Click(Sender: TObject);
     procedure SpeedButton4Click(Sender: TObject);
@@ -42,7 +43,7 @@ implementation
 
 
 
-{$R *.DFM}
+{$R *.lfm}
 
 procedure TForm2.FormDeactivate(Sender: TObject);
 begin
@@ -53,7 +54,8 @@ procedure TForm2.SpeedButton1Click(Sender: TObject);
 var
   sOld, sNew: string;
 begin
-  if Assigned(FOneItem) then begin
+  if Assigned(FOneItem) then
+  begin
     sOld := FOneItem.Path;
     sNew := IncludeTrailingBackSlash(FOneItem.InPath) + txtName.Text;
     if sOld <> sNew then
@@ -67,21 +69,21 @@ begin
   Visible := False;
 end;
 
-procedure TForm2.FormKeyPress(Sender: TObject; var Key: Char);
+procedure TForm2.FormKeyPress(Sender: TObject; var Key: char);
 begin
   if Key = #13 then
     SpeedButton1Click(Sender)
   else if Key = #27 then
-    Visible:=False;
+    Visible := False;
 end;
 
-procedure TForm2.ListBox1MouseMove(Sender: TObject; Shift: TShiftState; X,
-  Y: Integer);
+procedure TForm2.ListBox1MouseMove(Sender: TObject; Shift: TShiftState; X, Y: integer);
 var
-  i: Integer;
+  i: integer;
 begin
-  i := ListBox1.ItemAtPos(Point(x,y), True);
-  if (i >= 0) and (i < ListBox1.Items.Count) then ListBox1.ItemIndex := i;
+  i := ListBox1.ItemAtPos(Point(x, y), True);
+  if (i >= 0) and (i < ListBox1.Items.Count) then
+    ListBox1.ItemIndex := i;
 end;
 
 procedure TForm2.ListBox1Click(Sender: TObject);
@@ -108,12 +110,13 @@ procedure TForm2.SpeedButton3Click(Sender: TObject);
 var
   shfop: TSHFileOpStruct;
 begin
-  if Assigned(FOneItem) then begin
+  if Assigned(FOneItem) then
+  begin
     shfop.Wnd := handle;
     shfop.wFunc := FO_DELETE;
 
     shfop.pFrom := PChar(GlobalAlloc(GPTR, Length(FOneItem.Path) + 2));
-    lstrcpy(shfop.pFrom, Pchar(FOneItem.Path));
+    lstrcpy(shfop.pFrom, PChar(FOneItem.Path));
 
     if (GetKeyState(VK_SHIFT) and $8000) <> 0 then
       shfop.fFlags := 0
@@ -128,7 +131,7 @@ end;
 procedure TForm2.SpeedButton4Click(Sender: TObject);
 begin
   if Assigned(FOneItem) then
-    ShellExecute(Application.Handle, nil, PChar(FOneItem.Path), nil, nil, SW_SHOWNORMAL);
+    ShellExecute(0, nil, PWideChar(FOneItem.Path), nil, nil, SW_SHOWNORMAL);
   Visible := False;
 end;
 
