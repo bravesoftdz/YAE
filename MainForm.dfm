@@ -1,0 +1,483 @@
+object Form1: TForm1
+  Left = 180
+  Top = 114
+  Width = 852
+  Height = 585
+  Caption = 'YAE'
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'MS Sans Serif'
+  Font.Style = []
+  Menu = MainMenu1
+  OldCreateOrder = False
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
+  PixelsPerInch = 96
+  TextHeight = 13
+  object Splitter1: TSplitter
+    Left = 185
+    Top = 83
+    Width = 3
+    Height = 437
+    Cursor = crHSplit
+  end
+  object CoolBar1: TCoolBar
+    Left = 0
+    Top = 0
+    Width = 844
+    Height = 83
+    AutoSize = True
+    Bands = <
+      item
+        Control = Panel1
+        ImageIndex = -1
+        Text = 'Note'
+        Width = 840
+      end
+      item
+        Control = ToolBar1
+        ImageIndex = -1
+        Text = 'Toolbar'
+        Width = 840
+      end
+      item
+        Control = Panel4
+        ImageIndex = -1
+        Text = 'Address'
+        Width = 840
+      end>
+    object Panel1: TPanel
+      Left = 36
+      Top = 0
+      Width = 800
+      Height = 25
+      Align = alTop
+      BevelOuter = bvNone
+      TabOrder = 0
+      object Label2: TLabel
+        Left = 25
+        Top = 9
+        Width = 417
+        Height = 13
+        Caption = 
+          'This one writes a file, yae.dat in every special folder and it k' +
+          'eeps several extra data there'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindow
+        Font.Height = -11
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
+        ParentFont = False
+        Transparent = True
+      end
+      object Label1: TLabel
+        Left = 24
+        Top = 8
+        Width = 417
+        Height = 13
+        Caption = 
+          'This one writes a file, yae.dat in every special folder and it k' +
+          'eeps several extra data there'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clMaroon
+        Font.Height = -11
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
+        ParentFont = False
+        Transparent = True
+      end
+    end
+    object ToolBar1: TToolBar
+      Left = 49
+      Top = 27
+      Width = 787
+      Height = 25
+      Caption = 'ToolBar1'
+      EdgeBorders = []
+      TabOrder = 1
+    end
+    object Panel4: TPanel
+      Left = 51
+      Top = 54
+      Width = 785
+      Height = 25
+      BevelOuter = bvNone
+      TabOrder = 2
+      OnResize = Panel4Resize
+      object SpeedButton1: TSpeedButton
+        Left = 248
+        Top = 0
+        Width = 23
+        Height = 22
+        Flat = True
+        Glyph.Data = {
+          76010000424D7601000000000000760000002800000020000000100000000100
+          04000000000000010000120B0000120B00001000000000000000000000000000
+          800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
+          FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00333333333333
+          33333333333333333333333333333333333333333333333333FF333333333333
+          3000333333FFFFF3F77733333000003000B033333777773777F733330BFBFB00
+          E00033337FFF3377F7773333000FBFB0E000333377733337F7773330FBFBFBF0
+          E00033F7FFFF3337F7773000000FBFB0E000377777733337F7770BFBFBFBFBF0
+          E00073FFFFFFFF37F777300000000FB0E000377777777337F7773333330BFB00
+          000033333373FF77777733333330003333333333333777333333333333333333
+          3333333333333333333333333333333333333333333333333333333333333333
+          3333333333333333333333333333333333333333333333333333}
+        NumGlyphs = 2
+        OnClick = SpeedButton1Click
+      end
+      object txtAddress: TEdit
+        Left = 0
+        Top = 0
+        Width = 249
+        Height = 21
+        TabOrder = 0
+        OnKeyPress = txtAddressKeyPress
+      end
+    end
+  end
+  object Panel2: TPanel
+    Left = 0
+    Top = 83
+    Width = 185
+    Height = 437
+    Align = alLeft
+    TabOrder = 1
+    object TreeView1: TTreeView
+      Left = 1
+      Top = 1
+      Width = 183
+      Height = 435
+      Align = alClient
+      HideSelection = False
+      Indent = 19
+      TabOrder = 0
+      OnChange = TreeView1Change
+      OnDeletion = TreeView1Deletion
+      OnExpanding = TreeView1Expanding
+    end
+  end
+  object Panel3: TPanel
+    Left = 188
+    Top = 83
+    Width = 656
+    Height = 437
+    Align = alClient
+    TabOrder = 2
+    object Splitter2: TSplitter
+      Left = 1
+      Top = 314
+      Width = 654
+      Height = 3
+      Cursor = crVSplit
+      Align = alBottom
+    end
+    object panError: TPanel
+      Left = 1
+      Top = 1
+      Width = 654
+      Height = 313
+      Align = alClient
+      Caption = '404'
+      TabOrder = 1
+      Visible = False
+    end
+    object ListView1: TListView
+      Left = 1
+      Top = 1
+      Width = 654
+      Height = 313
+      Align = alClient
+      Columns = <
+        item
+          Caption = 'Name'
+          Width = 200
+        end
+        item
+          Caption = 'Extention'
+        end
+        item
+          Caption = 'Size'
+          Width = 100
+        end
+        item
+          Caption = 'Modified'
+          Width = 150
+        end
+        item
+          Caption = 'Attr'
+        end>
+      HideSelection = False
+      MultiSelect = True
+      RowSelect = True
+      SmallImages = ImageList1
+      TabOrder = 0
+      ViewStyle = vsReport
+      OnChange = ListView1Change
+      OnColumnClick = ListView1ColumnClick
+      OnCompare = ListView1Compare
+      OnContextPopup = ListView1ContextPopup
+      OnDblClick = ListView1DblClick
+      OnDeletion = ListView1Deletion
+    end
+    object panCustom: TPanel
+      Left = 1
+      Top = 317
+      Width = 654
+      Height = 119
+      Align = alBottom
+      Caption = 'panCustom'
+      TabOrder = 2
+      object ListBox1: TListBox
+        Left = 1
+        Top = 1
+        Width = 121
+        Height = 117
+        Align = alLeft
+        BorderStyle = bsNone
+        Font.Charset = GREEK_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Verdana'
+        Font.Style = []
+        ItemHeight = 13
+        Items.Strings = (
+          'Notes'
+          'Version Information'
+          'Events')
+        ParentFont = False
+        TabOrder = 0
+        OnClick = ListBox1Click
+      end
+      object Notebook1: TNotebook
+        Left = 122
+        Top = 1
+        Width = 531
+        Height = 117
+        Align = alClient
+        TabOrder = 1
+        object TPage
+          Left = 0
+          Top = 0
+          Caption = 'Notes'
+          object SpeedButton2: TSpeedButton
+            Left = 8
+            Top = 8
+            Width = 23
+            Height = 22
+            AllowAllUp = True
+            GroupIndex = 1
+            Glyph.Data = {
+              F6000000424DF600000000000000760000002800000010000000100000000100
+              0400000000008000000000000000000000001000000000000000000000000000
+              8000008000000080800080000000800080008080000080808000C0C0C0000000
+              FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00888888888888
+              8888888888888888888888888888888888888888888888888888888000000008
+              8888888800088000888888880008800088888888000880008888888800000008
+              8888888800088000888888880008800088888888000880008888888000000008
+              8888888888888888888888888888888888888888888888888888}
+            OnClick = SpeedButton2Click
+          end
+          object SpeedButton3: TSpeedButton
+            Left = 32
+            Top = 8
+            Width = 23
+            Height = 22
+            AllowAllUp = True
+            GroupIndex = 2
+            Glyph.Data = {
+              F6000000424DF600000000000000760000002800000010000000100000000100
+              0400000000008000000000000000000000001000000000000000000000000000
+              8000008000000080800080000000800080008080000080808000C0C0C0000000
+              FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00888888888888
+              8888888888888888888888888888888888888888888888888888888000000888
+              8888888880078888888888888700888888888888880078888888888888700888
+              8888888888800788888888888887008888888888888800788888888888800000
+              8888888888888888888888888888888888888888888888888888}
+          end
+          object SpeedButton4: TSpeedButton
+            Left = 56
+            Top = 8
+            Width = 23
+            Height = 22
+            AllowAllUp = True
+            GroupIndex = 3
+            Glyph.Data = {
+              F6000000424DF600000000000000760000002800000010000000100000000100
+              0400000000008000000000000000000000001000000000000000000000000000
+              8000008000000080800080000000800080008080000080808000C0C0C0000000
+              FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00888888888888
+              8888888888888888888888800000000088888888888888888888888880000088
+              8888888800787008888888880088800888888888008880088888888800888008
+              8888888800888008888888880088800888888888008880088888888000080000
+              8888888888888888888888888888888888888888888888888888}
+          end
+          object SpeedButton5: TSpeedButton
+            Left = 496
+            Top = 8
+            Width = 23
+            Height = 22
+            Glyph.Data = {
+              F6000000424DF600000000000000760000002800000010000000100000000100
+              0400000000008000000000000000000000001000000000000000000000000000
+              8000008000000080800080000000800080008080000080808000C0C0C0000000
+              FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00888888888888
+              8888880000000000000880330000008803088033000000880308803300000088
+              0308803300000000030880333333333333088033000000003308803088888888
+              0308803088888888030880308888888803088030888888880308803088888888
+              0008803088888888080880000000000000088888888888888888}
+          end
+          object RichEdit1: TRichEdit
+            Left = 8
+            Top = 32
+            Width = 513
+            Height = 81
+            Anchors = [akLeft, akTop, akRight, akBottom]
+            Lines.Strings = (
+              'RichEdit1')
+            TabOrder = 0
+          end
+          object ComboBox1: TComboBox
+            Left = 80
+            Top = 8
+            Width = 145
+            Height = 21
+            ItemHeight = 13
+            TabOrder = 1
+            OnChange = ComboBox1Change
+          end
+        end
+        object TPage
+          Left = 0
+          Top = 0
+          Caption = 'Version Information'
+          object StringGrid1: TStringGrid
+            Left = 0
+            Top = 0
+            Width = 531
+            Height = 117
+            Align = alClient
+            ColCount = 2
+            DefaultColWidth = 200
+            DefaultRowHeight = 14
+            TabOrder = 0
+          end
+        end
+        object TPage
+          Left = 0
+          Top = 0
+          Caption = 'Events'
+        end
+      end
+    end
+  end
+  object StatusBar1: TStatusBar
+    Left = 0
+    Top = 520
+    Width = 844
+    Height = 19
+    Panels = <>
+    SimplePanel = False
+  end
+  object ImageList1: TImageList
+    BkColor = clSilver
+    Left = 96
+    Top = 187
+    Bitmap = {
+      494C010102000400040010001000C0C0C000FF10FFFFFFFFFFFFFFFF424D3600
+      0000000000003600000028000000400000001000000001001000000000000008
+      0000000000000000000000000000000000001863186318631863186318631863
+      1863186318631863186318631863186318631863186318631863186318631863
+      1863186318631863186318631863186318630000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000001863186318631863186318631863
+      1863186318631863186318631863186318631863186318631863186318631863
+      1863186318631863186318631863186318630000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000001863186318631863186318631863
+      0002000218631863186318631863186318631863186318631863186318630002
+      0002000200021863186318631863186318630000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      000000000000000000000000000000000000186318631863186318631863E003
+      E0030002000218631863186318631863186318631863186318631863E003E003
+      E003E00300021863186318631863186318630000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      00000000000000000000000000000000000018631863186318631863E003E003
+      E003E003000200021863186318631863186318631863186318631863E003E003
+      E003E00300021863186318631863186318630000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000001863186318631863E003E003E003
+      E003E003E00300020002186318631863186318631863186318631863E003E003
+      E003E00300021863186318631863186318630000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      000000000000000000000000000000000000186318631863E003E003E003E003
+      E003E003E003E0030002000218631863186318631863186318631863E003E003
+      E003E00300021863186318631863186318630000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      00000000000000000000000000000000000018631863E003E003E003E003E003
+      E003E003E003E003E003186318631863186318631863186318631863E003E003
+      E003E00300021863186318631863186318630000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      00000000000000000000000000000000000018631863186318631863E003E003
+      E003E003000218631863186318631863186318631863186318631863E003E003
+      E003E00300021863186318631863186318630000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      00000000000000000000000000000000000018631863186318631863E003E003
+      E003E003000218631863186318631863186318631863186300020002E003E003
+      E003E00300020002000200021863186318630000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      00000000000000000000000000000000000018631863186318631863E003E003
+      E003E003000218631863186318631863186318631863E003E003E003E003E003
+      E003E003E003E003E00318631863186318630000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      00000000000000000000000000000000000018631863186318631863E003E003
+      E003E0030002186318631863186318631863186318631863E003E003E003E003
+      E003E003E003E003186318631863186318630000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      00000000000000000000000000000000000018631863186318631863E003E003
+      E003E00300021863186318631863186318631863186318631863E003E003E003
+      E003E003E0031863186318631863186318630000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      00000000000000000000000000000000000018631863186318631863E003E003
+      E003E003000218631863186318631863186318631863186318631863E003E003
+      E003E00318631863186318631863186318630000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      00000000000000000000000000000000000018631863186318631863E003E003
+      E003E0031863186318631863186318631863186318631863186318631863E003
+      E003186318631863186318631863186318630000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000001863186318631863186318631863
+      1863186318631863186318631863186318631863186318631863186318631863
+      1863186318631863186318631863186318630000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      000000000000000000000000000000000000424D3E000000000000003E000000
+      2800000040000000100000000100010000000000800000000000000000000000
+      000000000000000000000000FFFFFF00FFFFFFFF00000000FFFFFFFF00000000
+      FE7FFC3F00000000FC3FF83F00000000F81FF83F00000000F00FF83F00000000
+      E007F83F00000000C00FF83F00000000F83FF83F00000000F83FE00700000000
+      F83FC00F00000000F83FE01F00000000F83FF03F00000000F83FF87F00000000
+      F87FFCFF00000000FFFFFFFF0000000000000000000000000000000000000000
+      000000000000}
+  end
+  object MainMenu1: TMainMenu
+    Left = 408
+    Top = 264
+    object File1: TMenuItem
+      Caption = '&File'
+      object NewWindow1: TMenuItem
+        Caption = 'New Window'
+        OnClick = NewWindow1Click
+      end
+    end
+    object Refresh1: TMenuItem
+      Caption = 'View'
+      object Refresh2: TMenuItem
+        Caption = 'Refresh'
+        ShortCut = 116
+        OnClick = SpeedButton1Click
+      end
+    end
+  end
+end
